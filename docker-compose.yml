@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  debian-slim:
+    #image: debian:11
+    image: debian:11-slim
+    container_name: debian-slim
+    restart: always
+    command: ["sleep", "infinity"]
