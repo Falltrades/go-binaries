@@ -6,3 +6,12 @@ Imagine you need to troubleshoot network issues and the command are somehow miss
 Fear not, because you may be able to workaround by using those binaries.
 
 How come those binaries could work ? As long as glibc libraries are compatible. This means you may need to build it on a similar system to your target.
+
+Official golang images can be found there : https://hub.docker.com/_/golang
+
+Use script/build.sh to build your binary. Example:
+```
+cd script
+./build.sh golang:1.23rc1-alpine3.20 curl
+./build.sh golang:1.23rc1-bullseye netcat
+```
