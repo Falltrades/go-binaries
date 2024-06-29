@@ -2,14 +2,18 @@
 
 set -e
 
+tempdir=tempdir
 containerName=GO_CONTAINER
 imageOS=${1}
 networkModule=${2}
 
+rm -rf ${tempdir}
+mkdir ${tempdir}
+
 docker run --rm -i -d --name ${containerName} \
   --net=host \
-  --mount type=bind,source="$(pwd)"/go-binaries/,destination=/tmp/go-binaries/ \
+  --mount type=bind,source="$(pwd)"/${tempdir}/,destination=/tmp/${tempdir}/ \
   ${imageOS} sh
-cp ../${networkModule}/${networkModule}.go go-binaries/
-docker exec -it ${containerName} sh -c "cd /tmp/go-binaries && go mod init curl && go mod tidy && go build ."
+cp ../${networkModule}/${networkModule}.go ${tempdir}
+docker exec -it ${containerName} sh -c "cd /tmp/${tempdir} && go mod init ${networkModule} && go mod tidy && go build ."
 docker stop ${containerName}
